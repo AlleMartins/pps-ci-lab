@@ -1,0 +1,13 @@
+on:
+  push: # Trigger the workflow on push
+    branches:
+      - main # but only for the main branch
+  pull_request: # Also trigger for pull requests
+    branches:
+      - main # but only for the main branch
+  page_build: # Also trigger on page_build
+  release: # Also trigger on release...
+    types:
+      - created # ...created
+  schedule:
+    - cron:  '*/30 5,17 * * *' # Cron syntax (see crontab.guru)
