@@ -1,0 +1,37 @@
+name: Lab7 Repo
+
+on:
+  push:
+  # Si attiva su ogni push, come richiesto
+  pull_request:
+  # È buona pratica includerlo per testare i fork
+
+jobs:
+  Build:
+    name: Build and Test
+    # 1. Prepare a Linux virtual environment
+    runs-on: ubuntu-latest
+
+    env:
+      TERM: dumb
+
+    steps:
+      # Scarica il codice nel virtual environment
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install Java at the appropriate version
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: 'gradle' # Ottimizza la velocità delle build successive
+
+      # 3. Run Gradle making sure the build works
+      # Aggiungiamo il permesso di esecuzione per il wrapper di Gradle
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build # 'build' include 'check' (test) e la compilazione
